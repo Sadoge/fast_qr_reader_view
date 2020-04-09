@@ -160,7 +160,7 @@ public class FastQrReaderViewPlugin implements MethodCallHandler, PluginRegistry
      */
     public static void registerWith(Registrar registrar) {
         //Check if we are not in a headless environment
-        if(registar.activity() != null) {
+        if(registrar.activity() != null) {
             channel =
                 new MethodChannel(registrar.messenger(), "fast_qr_reader_view");
 
