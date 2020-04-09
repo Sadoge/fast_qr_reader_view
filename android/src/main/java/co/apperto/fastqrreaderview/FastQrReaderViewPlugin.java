@@ -159,17 +159,20 @@ public class FastQrReaderViewPlugin implements MethodCallHandler, PluginRegistry
      * Plugin registration.
      */
     public static void registerWith(Registrar registrar) {
-        channel =
+        //Check if we are not in a headless environment
+        if(registar.activity() != null) {
+            channel =
                 new MethodChannel(registrar.messenger(), "fast_qr_reader_view");
 
-        cameraManager = (CameraManager) registrar.activity().getSystemService(Context.CAMERA_SERVICE);
+            cameraManager = (CameraManager) registrar.activity().getSystemService(Context.CAMERA_SERVICE);
 
-        channel.setMethodCallHandler(
+            channel.setMethodCallHandler(
                 new FastQrReaderViewPlugin(registrar, registrar.view(), registrar.activity()));
 
-        FastQrReaderViewPlugin plugin = new FastQrReaderViewPlugin(registrar, registrar.view(), registrar.activity());
-        channel.setMethodCallHandler(plugin);
-        registrar.addRequestPermissionsResultListener(plugin);
+            FastQrReaderViewPlugin plugin = new FastQrReaderViewPlugin(registrar, registrar.view(), registrar.activity());
+            channel.setMethodCallHandler(plugin);
+            registrar.addRequestPermissionsResultListener(plugin);
+        }
     }
 
     /*
